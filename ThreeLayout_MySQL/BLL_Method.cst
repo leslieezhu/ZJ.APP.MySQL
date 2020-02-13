@@ -1,0 +1,123 @@
+﻿<%-- 
+生成单表的BLL常用方法 
+--%>
+<%@ CodeTemplate Language="C#" TargetLanguage="C#" ResponseEncoding="UTF-8" Description="Generates a very simple business object." %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="1.Source" Optional="True" Description="Table that the object is based on." %>
+
+<%@ Property Name="Unchanged" Type="System.Boolean" Category="2.Common" Default="True" Description="勾选表示生成的类名同表名,否则截取表前缀作为类名" %>
+<%@ Property Name="ProjectNameSpace" Type="String" Category="2.Common" Default="CIIC.XXX" Optional="False" Description="项目的命名空间,即Common包,Entity包,DAL,Contract,BLL包的前缀" %>
+
+<%@ Assembly Name="SchemaExplorer"%>
+<%@ Assembly Name="System.Data"%>
+<%@ Import Namespace="SchemaExplorer"%>
+<%@ Import Namespace="System.Data"%>
+<%@ Import Namespace="System.Text"%>
+
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.Common;
+using System.Collections.Generic;
+using <%= ProjectNameSpace %>.Entity;
+using <%= ProjectNameSpace %>.DAL;
+using <%= ProjectNameSpace %>.Contract;
+
+namespace <%= ProjectNameSpace %>.BLL
+
+[Contract]
+int Add<%= GetClassName(SourceTable,Unchanged) %>Entity(<%= GetClassName(SourceTable,Unchanged) %>Entity entity);
+
+int Update<%= GetClassName(SourceTable,Unchanged) %>Entity(<%= GetClassName(SourceTable,Unchanged) %>Entity entity);
+
+int Disable<%= GetClassName(SourceTable,Unchanged) %>EntityById(object Id);
+
+<%= GetClassName(SourceTable,Unchanged) %>Entity Get<%= GetClassName(SourceTable,Unchanged) %>EntityById(object Id);
+
+List<<%= GetClassName(SourceTable,Unchanged) %>Entity> GetAll<%= GetClassName(SourceTable,Unchanged) %>(List<SqlDbParameter> parms);
+
+List<<%= GetClassName(SourceTable,Unchanged) %>Entity> GetAll<%= GetClassName(SourceTable,Unchanged) %>(List<SqlDbParameter> parms, string OrderBy);
+
+List<<%= GetClassName(SourceTable,Unchanged) %>Entity> Get<%= GetClassName(SourceTable,Unchanged) %>Paged(List<SqlDbParameter> parms, string OrderBy, int PageSize, int PageIndex, out int RecordCount);
+
+
+[BLL]
+#region [<%= GetClassName(SourceTable,Unchanged) %>]
+public void Add<%= GetClassName(SourceTable,Unchanged) %>Entity(<%= GetClassName(SourceTable,Unchanged) %>Entity entity)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    dal.Insert(entity);
+}
+
+public int Update<%= GetClassName(SourceTable,Unchanged) %>Entity(<%= GetClassName(SourceTable,Unchanged) %>Entity entity)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.Update(entity);
+}
+
+/// <summary><%= GetClassName(SourceTable,Unchanged) %>Entity软删除方法
+/// </summary>
+/// <param name="Id"></param>
+/// <returns></returns>
+public int Disable<%= GetClassName(SourceTable,Unchanged) %>EntityById(object Id)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.Disabled(Id);
+}
+
+public int Delete<%= GetClassName(SourceTable,Unchanged) %>EntityById(object Id)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.Delete(Id);
+}
+
+
+
+public <%= GetClassName(SourceTable,Unchanged) %>Entity Get<%= GetClassName(SourceTable,Unchanged) %>EntityById(object Id)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.GetEntityById(Id);
+}
+
+
+//返回全部<%= GetClassName(SourceTable,Unchanged) %>Entity
+public List<<%= GetClassName(SourceTable,Unchanged) %>Entity> GetAll<%= GetClassName(SourceTable,Unchanged) %>(List<SqlDbParameter> parms)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.GetAll(parms);
+}
+
+public List<<%= GetClassName(SourceTable,Unchanged) %>Entity> GetAll<%= GetClassName(SourceTable,Unchanged) %>(List<SqlDbParameter> parms, string orderBy)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.GetAll(parms, orderBy);
+}
+
+//列表分页查询
+public List<<%= GetClassName(SourceTable,Unchanged) %>Entity> Get<%= GetClassName(SourceTable,Unchanged) %>Paged(List<SqlDbParameter> parms, string OrderBy, int PageSize, int PageIndex, out int RecordCount)
+{
+    <%= GetClassName(SourceTable,Unchanged) %>DAL dal = new <%= GetClassName(SourceTable,Unchanged) %>DAL();
+    return dal.Get<%= GetClassName(SourceTable,Unchanged) %>Paged(parms, OrderBy, PageSize, PageIndex, out RecordCount);
+}
+#endregion
+<script runat="template">
+    public string GetClassName(TableSchema table, Boolean unchanged)
+    {
+        if(table==null)
+        {
+            return null;
+        }
+        if(unchanged)
+        {
+            return table.Name;
+        }
+        else
+        {
+            if(table.Name.IndexOf("_") != -1)
+            {
+                return StringUtil.ToPascalCase(table.Name.Substring(table.Name.IndexOf("_")));
+            }
+            return StringUtil.ToPascalCase(table.Name);
+        }
+    }  
+
+</script>

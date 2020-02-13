@@ -1,0 +1,32 @@
+﻿<%-- 
+快速生成XxxBLL.cs文件
+--%>
+<%@ Template Language="C#" TargetLanguage="Text" %>
+<%@ Property Name="ProjectNameSpace" Type="String" Category="1.Common" Default="CIIC.XXX" Optional="False" Description="项目的命名空间,即Common包,Entity包,DAL包的前缀" %>
+<%@ Property Name="ContractName" Type="String" Category="1.Common" Default="XXX" Optional="False" Description="BLL文件名字,与Contract文件和interface名对应" %>
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using <%= ProjectNameSpace %>.Common;
+using <%= ProjectNameSpace %>.Common.Cache;
+using <%= ProjectNameSpace %>.Common.Security;
+using <%= ProjectNameSpace %>.Entity;
+using <%= ProjectNameSpace %>.DAL;
+using <%= ProjectNameSpace %>.Contract;
+
+namespace <%= ProjectNameSpace %>.BLL
+{
+    public partial class <%= ContractName %>BLL : BllBase, I<%= ContractName %>Contract
+    {
+	
+	}
+}
+<script runat="template">
+public override string GetFileName()
+{
+	return this.ContractName+"BLL.cs";
+}
+</script>
