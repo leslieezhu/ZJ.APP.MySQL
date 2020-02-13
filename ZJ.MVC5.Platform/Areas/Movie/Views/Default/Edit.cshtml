@@ -1,0 +1,115 @@
+﻿@using ZJ.App.Entity
+@model tbiz_movieEntity
+@{
+    ViewBag.Title = "编辑电影";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Default",new { area = "Movie"})">电影列表</a></li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="ibox float-e-margins">
+            <form id="form1">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a class="pull-left thumbnail">
+                                <img id="preview_img" class="media-object" onload="DrawImage(200, 200, this)">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="media">
+                                <div class="media-body">
+                                    <input id="fileupload" type="file" name="files">
+                                    <input type="hidden" id="save_name" value="" data-model="movie.ImgFileName" />
+                                    <div id="files" class="files"></div>
+                                    @Html.Hidden("ImgFileName", Model.ImgPathFileName)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"><span style="color:red">*</span>视频文件命名</label>
+                                <div class="col-md-9 input-group">
+                                    @Html.TextBox("MovieFileName", Model.MovieFileName, new { @class = "form-control", required = "required", data_model = "movie.MovieFileName", style = "max-width: 100%" })
+                                    @Html.Hidden("Id", Model.Id, new { data_model = "movie.Id" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">影片名</label>
+                                <div class="col-md-8 input-group">
+                                    @Html.TextBox("MovieName", Model.MovieName, new { @class = "form-control", data_model = "movie.MovieName" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">地区:</label>
+                                <div class="col-md-8 input-group">
+                                    @Html.DropDownList("CategoryByLocal", null, new { @class = "form-control", data_model = "movie.CategoryByLocal" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="col-md-4 control-label" for="dtp_input1" >上映年份:</label>
+                            <div class="form-group">
+                                <div class="col-md-8 input-group date form_year" data-link-field="dtp_input1">
+                                    @Html.TextBox("PublicDate", Model.PublicDate, new { @class = "form-control", data_model = "movie.PublicDate" })
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" id="dtp_input1" value="" /><br />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-md-4 control-label">存储位置:</label>
+                            <div class="form-group">
+                                <div class="col-md-8 input-group">
+                                    @Html.DropDownList("SaveLocal", null, new { @class = "form-control", data_model = "movie.SaveLocal" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <center>
+                            <a href="javascript:void(0);" class="btn btn-success" id="btnSave"><i class="fa fa-save"></i> 保存 </a>
+                        </center>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/Content/jQueryFileUploadCss")
+    @Styles.Render("~/Content/datetimepickerStyles")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/jQueryFileUpload")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/Scripts/common.js")
+    @Scripts.Render("~/Scripts/ControlJS/movie_edit.js")
+    <script>
+
+    </script>
+}

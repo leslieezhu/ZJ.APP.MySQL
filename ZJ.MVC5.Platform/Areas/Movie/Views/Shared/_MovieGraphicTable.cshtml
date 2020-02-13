@@ -1,0 +1,20 @@
+﻿@using ZJ.App.Entity
+@using Webdiyer.WebControls.Mvc
+@model PagedList<tbiz_movieEntity>
+
+<div class="well">
+    <div id="xmore">
+        <div class="row">
+            @{ int i = 0;}
+            @foreach (var item in Model)
+            {
+                string imgPath = string.IsNullOrEmpty(item.FileName) ? "/ImageBase/Movie/movie_default.png" : item.FileDirectory + item.FileName;
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <a href="" class="thumbnail">
+                    <img src="@imgPath" alt="">
+                </a>
+            </div>
+            }
+        </div>
+    </div>
+</div>

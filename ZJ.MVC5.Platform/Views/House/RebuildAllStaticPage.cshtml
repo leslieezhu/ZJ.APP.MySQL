@@ -1,0 +1,37 @@
+﻿
+@{
+    //Layout = null;
+}
+
+@*进度条*@
+<div class="progressInfo">
+    <div class="progress"><div class="progress-bar"><span class="sr-only" style="width:0%"></span></div></div>
+    总共0页，已生成0页，生成进度：0%
+</div>
+
+<br />
+<br />
+@*生成页面详情*@
+<iframe src="~/WebAdmin/House/RebuildAllStaticPageShow?key=@ViewBag.Key" width="80%" height="500"></iframe>
+
+
+<script type="text/javascript">
+    $(function () {
+        //$.get("/WebAdmin/House/RebuildAllStaticPageShow", { key: '@ViewBag.Key' });
+
+        //定时器，每秒获取一次生成进度
+        var t1 = setInterval(getProgress, 1000);
+
+        function getProgress() {
+            $.post("/WebAdmin/House/GetRebuildStaticPageProgress", { key: '@ViewBag.Key' }, function (data) {
+                //更新进度
+                $(".progressInfo").html("<div class='progress'><div class='progress-bar'><span class='sr-only' style='width:" + data.percent + "'></span></div></div>总共" + data.totleCount + "页，已生成" + data.rebuildCount + "页，生成进度：" + data.percent);
+                //进度 100% ，停掉定时器
+                if (data.percent == "100%") {
+                    //去掉定时器
+                    clearInterval(t1);
+                }
+            });
+        };
+    });
+</script>

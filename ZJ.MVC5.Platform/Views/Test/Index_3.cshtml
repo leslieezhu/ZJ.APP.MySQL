@@ -1,0 +1,119 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript">
+        (function () {
+            //$(window).resize(function () {
+            //    $("#xmore img").each(function () {
+            //        $("#xmore img").css("height", $(this).width() / 3 * 2);
+
+            //    });
+            //});
+        })(window);
+        window.onload = function () {
+            //debugger
+            //正常加载后
+            $("#xmore img").each(function () {
+                //$("#xmore img").css("height", "200px");
+                DrawImage(200, 200, this);
+
+            });
+        }
+
+        var flag = false;
+        function DrawImage(iwidth, iheight, ImgD) {
+            var image = new Image();
+            image.src = ImgD.src;
+            if (image.width > 0 && image.height > 0) {
+                flag = true;
+                //原图宽除高的值和定义宽除高的值的比较
+                if (image.width / image.height >= iwidth / iheight) {
+                    // 原图的宽大于定义的宽
+                    if (image.width > iwidth) {
+                        ImgD.width = iwidth;
+                        //定义的宽度和原图的宽度的比例，同比缩小高度
+                        ImgD.height = (image.height * iwidth) / image.width;
+                    } else {
+                        ImgD.width = image.width;
+                        ImgD.height = image.height;
+                    }
+                    ImgD.alt = image.width + "×" + image.height;
+                }
+                else {
+                    // 原图的高大于定义的高
+                    if (image.height > iheight) {
+                        ImgD.height = iheight;
+                        //定义的高度和原图的高度的比例，同比缩小宽度
+                        ImgD.width = (image.width * iheight) / image.height;
+                    } else {
+                        ImgD.width = image.width;
+                        ImgD.height = image.height;
+                    }
+                    ImgD.alt = image.width + "×" + image.height;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="well">
+        <div id="xmore">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/61" class="thumbnail">
+                        <img src="/uploadImage/living-News_eng_1_1.jpg" alt="">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/43" class="thumbnail">
+                        <img src="/uploadImage/living-News_eng_1_2.jpg" alt="">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/27" class="thumbnail">
+                        <img src="/uploadImage/living-News_eng_1_3.jpg" alt="">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/42" class="thumbnail">
+                        <img src="/uploadImage/living-News_eng_2_2.jpg" alt="">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/44" class="thumbnail">
+                        <img src="/uploadImage/living-News_eng_2_3.jpg" alt="">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/11" class="thumbnail">
+                        <img src="/uploadImage/living-News_eng_2_4.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="http://127.0.0.1/xiximage/view/61" class="thumbnail">
+                        <img src="/uploadImage/1.jpg" alt="">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

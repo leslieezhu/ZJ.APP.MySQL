@@ -1,0 +1,31 @@
+﻿@using ZJ.App.Entity
+@using Webdiyer.WebControls.Mvc
+@model PagedList<tbiz_movieEntity>
+@{
+    ViewBag.Title = "Movie Graphic";
+}
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@ViewBag.Title</h2>
+        <ol class="breadcrumb">
+            <li><a href="@Url.Action("Index", "Default",new { area = "Movie"})">电影列表</a></li>
+            <li class="active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div id="movie_graphic">
+        @Html.Partial("_MovieGraphicList", Model)
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/Scripts/common.js")
+    @Scripts.Render("~/Scripts/ControlJS/movie_graphic.js")
+    @{Html.RegisterMvcPagerScriptResource();}
+}
