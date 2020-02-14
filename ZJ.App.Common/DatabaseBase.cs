@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-
+/// <summary>
+/// Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+/// Microsoft.Practices.EnterpriseLibrary.Common.dll
+/// EnterpriseLibraryContainer
+/// </summary>
 namespace ZJ.App.Common
 {
     /// <summary>

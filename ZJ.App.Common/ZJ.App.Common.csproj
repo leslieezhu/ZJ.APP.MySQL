@@ -37,8 +37,9 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
       <HintPath>..\..\ZJ.App\Reference\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
-      <HintPath>..\..\ZJ.App\Reference\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\..\ZJ.App\Reference\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
