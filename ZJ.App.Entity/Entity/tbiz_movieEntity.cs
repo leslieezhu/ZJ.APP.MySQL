@@ -36,28 +36,28 @@ namespace ZJ.App.Entity
 
         #endregion
 
-        #region FileName
+        #region ImgFileName
         ///<summary>
-        ///
+        /// 电影海报主图文件名
         ///</summary>
-        public const string FieldName_FileName = "FileName";
-        private string _FileName;
+        public const string FieldName_ImgFileName = "ImgFileName";
+        private string _ImgFileName;
         ///<summary>
-        ///
+        /// 电影海报主图文件名
         ///</summary>
         [DataMember]
         [NoColumn]
-        public string FileName
+        public string ImgFileName
         {
-            get { return _FileName; }
+            get { return _ImgFileName; }
             set
             {
                 if (_IsQueryTemplate)
                 {
-                    this.RegisterQueryCondition(FieldName_FileName, value);
+                    this.RegisterQueryCondition(FieldName_ImgFileName, value);
                 }
 
-                _FileName = value;
+                _ImgFileName = value;
             }
         }
 

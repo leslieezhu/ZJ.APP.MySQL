@@ -88,24 +88,24 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                 movieBLL.Addtbiz_movieEntity(movie);
 
                 //电影图片文件
-                if (!string.IsNullOrEmpty(movie.ImgPathFileName))
+                if (!string.IsNullOrEmpty(movie.ImgFileName))
                 {
                     tbiz_pictureBLL pictureBLL = new tbiz_pictureBLL();
 
                     //Step1:将图片存档
-                    string FromPath = ConfigurationManager.AppSettings["UploadFileBasePath"] + movie.ImgPathFileName;
+                    string FromPath = ConfigurationManager.AppSettings["UploadFileBasePath"] + movie.ImgFileName;
                     string ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"];
                     //TO DO 放到App启动时初始化一次
                     if (!Directory.Exists(ToPath))
                     {
                         Directory.CreateDirectory(ToPath);
                     }
-                    ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"] + movie.ImgPathFileName;
+                    ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"] + movie.ImgFileName;
                     System.IO.File.Copy(FromPath, ToPath);
 
                     //Insert or Update tbiz_picture
                     tbiz_pictureEntity pictureEntity = new tbiz_pictureEntity();
-                    pictureEntity.FileName = movie.ImgPathFileName;
+                    pictureEntity.FileName = movie.ImgFileName;
                     pictureEntity.FileDirectory = ConfigurationManager.AppSettings["MovieImageDirectory"].SubStringLastIndexByChar('\\', 3);
                     pictureEntity.ReferenceID = (int)movie.Id;
                     pictureEntity.DataType = (int)Enumerator.DataType.Movie;
@@ -163,7 +163,7 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                 movieBLL.Updatetbiz_movieEntity(iniMovie);
 
                 //电影图片文件
-                if (!string.IsNullOrEmpty(movie.ImgPathFileName))
+                if (!string.IsNullOrEmpty(movie.ImgFileName))
                 {
                     tbiz_pictureBLL pictureBLL = new tbiz_pictureBLL();
                     List<SqlDbParameter> parms = new List<SqlDbParameter>();
@@ -178,21 +178,21 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                     List<tbiz_pictureEntity>  list = pictureBLL.GetAlltbiz_picture(parms, "Id ASC");
 
                     //Step2:将图片存档
-                    string FromPath = ConfigurationManager.AppSettings["UploadFileBasePath"] + movie.ImgPathFileName;
+                    string FromPath = ConfigurationManager.AppSettings["UploadFileBasePath"] + movie.ImgFileName;
                     string ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"];
                     //TO DO 放到App启动时初始化一次
                     if (!Directory.Exists(ToPath))
                     {
                         Directory.CreateDirectory(ToPath);
                     }
-                    ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"] + movie.ImgPathFileName;
+                    ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"] + movie.ImgFileName;
                     System.IO.File.Copy(FromPath, ToPath);
 
                     if (list.Count == 0)
                     {
                         //Insert or Update tbiz_picture
                         tbiz_pictureEntity pictureEntity = new tbiz_pictureEntity();
-                        pictureEntity.FileName = movie.ImgPathFileName;
+                        pictureEntity.FileName = movie.ImgFileName; //电影主图文件
                         pictureEntity.FileDirectory = ConfigurationManager.AppSettings["MovieImageDirectory"].SubStringLastIndexByChar('\\', 3);
                         pictureEntity.ReferenceID = (int)movie.Id;
                         pictureEntity.DataType = (int)Enumerator.DataType.Movie;
@@ -203,7 +203,7 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                     {
                         tbiz_pictureEntity pictureEntity = list[0];
                         string oldImgFile = pictureEntity.FileName;
-                        pictureEntity.FileName = movie.ImgPathFileName;
+                        pictureEntity.FileName = movie.ImgFileName;
                         pictureBLL.Updatetbiz_pictureEntity(pictureEntity);
                         //TO DO 旧图片清理逻辑
                         tbiz_pictureEntity  oldPic = new tbiz_pictureEntity();

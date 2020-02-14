@@ -52,7 +52,7 @@ namespace ZJ.App.DAL
                         A.ID,
                         A.MovieName,
                         A.PublicDate,
-                        B.FileName,
+                        B.FileName AS ImgFileName,
                         B.FileDirectory
                         from tbiz_movie A LEFT JOIN (SELECT FileName,FileDirectory,ReferenceID FROM tbiz_picture WHERE DataType=" + (int)Enumerator.DataType.Movie + @") B
                         ON A.ID = B.ReferenceID 
