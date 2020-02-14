@@ -1,0 +1,12 @@
+bin/
+obj/
+.settings/
+.vs/
+*.dbmdl
+*.jfm
+*.csproj.user
+/portal/node_modules
+/ZJ.MVC5.Platform/uploadImage
+/ZJ.MVC5.Platform/ImageBase
+/ZJ.MVC5.Platform/Movie
+/packages
