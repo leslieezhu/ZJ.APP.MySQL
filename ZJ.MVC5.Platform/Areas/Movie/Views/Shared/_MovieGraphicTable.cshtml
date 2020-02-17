@@ -3,18 +3,19 @@
 @model PagedList<tbiz_movieEntity>
 
 <div class="well">
+    <!--baguetteBox-->
     <div id="xmore">
         <div class="row">
             @{ int i = 0;}
             @foreach (var item in Model)
             {
                 string imgPath = string.IsNullOrEmpty(item.ImgFileName) ? "/ImageBase/Movie/movie_default.png" : item.FileDirectory + item.ImgFileName;
-            <div class="col-xs-6 col-sm-4 col-md-2">
-                <a href="@Url.Action("Detail",new { id=item.Id })" class="thumbnail">
-                    <img src="@imgPath" alt="">
-                </a>
-                <div style="text-align:center;">@item.MovieName</div>
-            </div>
+                <div class="col-xs-6 col-sm-4 col-md-2">
+                    <a href="@Url.Action("Edit",new { id=item.Id })" class="thumbnail">
+                        <img src="@imgPath" alt="">
+                    </a>
+                    <div style="text-align:center;">@item.MovieName</div>
+                </div>
             }
         </div>
     </div>
