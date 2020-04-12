@@ -47,7 +47,7 @@ namespace ZJ.MVC5.Platform
                         return Json(new { result = false, Message = "上传的文件过大！" }, JsonRequestBehavior.AllowGet);
                     }
                     // 文件上传后的保存路径
-                    string filePath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["UploadFileBasePath"]);
+                    string filePath = ConfigurationManager.AppSettings["UploadFileBasePath"];
                     if (!Directory.Exists(filePath))
                     {
                         Directory.CreateDirectory(filePath);

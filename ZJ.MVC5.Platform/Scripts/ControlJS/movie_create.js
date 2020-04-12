@@ -1,5 +1,5 @@
 ﻿(function () {
-    uploadAttachment();//@common.js
+    uploadAttachment();
     $("#btnSave").click(SubmitMovie);
     $('.form_year').datetimepicker(datetimepickerYearCfg);
 })(window);

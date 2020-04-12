@@ -52,9 +52,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LitJSON">
-      <HintPath>..\packages\LitJSON.dll</HintPath>
+      <HintPath>..\Reference\LitJSON.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging">
+      <HintPath>..\Reference\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -113,7 +116,7 @@
     </Reference>
     <Reference Include="Webdiyer.MvcPager, Version=3.0.2015.802, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Webdiyer.MvcPager.dll</HintPath>
+      <HintPath>..\Reference\Webdiyer.MvcPager.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>

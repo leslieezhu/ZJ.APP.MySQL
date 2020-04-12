@@ -16,14 +16,9 @@ namespace ZJ.MVC5.Platform
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-            ////defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional },
-            ////defaults: new { controller = "Test", action = "ShopPic", id = UrlParameter.Optional },
-            //namespaces: new string[] { "ZJ.MVC5.Platform.Areas.Movie" } //影片管理
-            //).DataTokens.Add("Area", "Movie");
-            defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional },
-            namespaces: new string[] { "ZJ.MVC5.Platform.Areas.QuestionBank" }
-            ).DataTokens.Add("Area", "QuestionBank");
+                defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional },
+                namespaces: new string[] { "ZJ.MVC5.Platform.Areas.Movie" }
+            ).DataTokens.Add("Area", "Movie"); //其它：QuestionBank
 
 
         }

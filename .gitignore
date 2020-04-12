@@ -5,8 +5,11 @@ obj/
 *.dbmdl
 *.jfm
 *.csproj.user
+*.config
 /portal/node_modules
 /ZJ.MVC5.Platform/uploadImage
 /ZJ.MVC5.Platform/ImageBase
 /ZJ.MVC5.Platform/Movie
+/ZJ.MVC5.Platform/App_Start
 /packages
+/Reference

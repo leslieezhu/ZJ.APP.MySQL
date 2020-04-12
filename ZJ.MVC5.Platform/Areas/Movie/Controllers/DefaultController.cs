@@ -26,7 +26,6 @@ namespace ZJ.MVC5.Platform.Areas.Movie
             //movie type dropdownList
             tcfg_dictitemBLL dictitemBLL = new tcfg_dictitemBLL();
             List<tcfg_dictitemEntity> categoryByLocalSelect = dictitemBLL.GetDictitemEntity("movie", "categoryByLocal");
-            categoryByLocalSelect.Insert(0, new tcfg_dictitemEntity { PropertyName = "请选择" });
             ViewBag.CategoryByLocal = new SelectList(categoryByLocalSelect, "PropertyValue", "PropertyName");
 
             return View();
@@ -41,7 +40,7 @@ namespace ZJ.MVC5.Platform.Areas.Movie
             tbiz_movieBLL movieBLL = new tbiz_movieBLL();
             List<SqlDbParameter> parms = new List<SqlDbParameter>();
             SqlDbParameter parm = null;
-            if (!string.IsNullOrEmpty(Request.Form["MovieFileName"]))//按电影文件名搜索
+            if (!string.IsNullOrEmpty(Request.Form["MovieFileName"]))
             {
                 parm = new SqlDbParameter();
                 parm.ColumnName = "MovieFileName";
@@ -49,16 +48,6 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                 parm.ParameterValue = Request.Form["MovieFileName"].UrlDecode().Trim();
                 parm.ColumnType = DbType.String;
                 parm.QualificationType = SqlDbParameter.QualificationSymbol.Like;
-                parms.Add(parm);
-            }
-            if (!string.IsNullOrEmpty(Request.Form["CategoryByLocal"]))//按地区属性搜索
-            {
-                parm = new SqlDbParameter();
-                parm.ColumnName = "CategoryByLocal";
-                parm.ParameterName = "CategoryByLocal";
-                parm.ParameterValue = Request.Form["CategoryByLocal"];
-                parm.ColumnType = DbType.Int32;
-                parm.QualificationType = SqlDbParameter.QualificationSymbol.Equal;
                 parms.Add(parm);
             }
 
@@ -99,25 +88,25 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                 movieBLL.Addtbiz_movieEntity(movie);
 
                 //电影图片文件
-                if (!string.IsNullOrEmpty(movie.ImgFileName))
+                if (!string.IsNullOrEmpty(movie.ImgPathFileName))
                 {
                     tbiz_pictureBLL pictureBLL = new tbiz_pictureBLL();
 
                     //Step1:将图片存档
-                    string FromPath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["UploadFileBasePath"]) + movie.ImgFileName;
-                    string ToPath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["MovieImageDirectory"]);
+                    string FromPath = ConfigurationManager.AppSettings["UploadFileBasePath"] + movie.ImgPathFileName;
+                    string ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"];
                     //TO DO 放到App启动时初始化一次
                     if (!Directory.Exists(ToPath))
                     {
                         Directory.CreateDirectory(ToPath);
                     }
-                    ToPath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["MovieImageDirectory"]) + movie.ImgFileName;
+                    ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"] + movie.ImgPathFileName;
                     System.IO.File.Copy(FromPath, ToPath);
 
                     //Insert or Update tbiz_picture
                     tbiz_pictureEntity pictureEntity = new tbiz_pictureEntity();
-                    pictureEntity.FileName = movie.ImgFileName;
-                    pictureEntity.FileDirectory = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["MovieImageDirectory"]).SubStringLastIndexByChar('\\', 3);
+                    pictureEntity.FileName = movie.ImgPathFileName;
+                    pictureEntity.FileDirectory = ConfigurationManager.AppSettings["MovieImageDirectory"].SubStringLastIndexByChar('\\', 3);
                     pictureEntity.ReferenceID = (int)movie.Id;
                     pictureEntity.DataType = (int)Enumerator.DataType.Movie;
                     pictureEntity.CreateTime = DateTime.Now;
@@ -174,7 +163,7 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                 movieBLL.Updatetbiz_movieEntity(iniMovie);
 
                 //电影图片文件
-                if (!string.IsNullOrEmpty(movie.ImgFileName))
+                if (!string.IsNullOrEmpty(movie.ImgPathFileName))
                 {
                     tbiz_pictureBLL pictureBLL = new tbiz_pictureBLL();
                     List<SqlDbParameter> parms = new List<SqlDbParameter>();
@@ -189,22 +178,22 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                     List<tbiz_pictureEntity>  list = pictureBLL.GetAlltbiz_picture(parms, "Id ASC");
 
                     //Step2:将图片存档
-                    string FromPath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["UploadFileBasePath"]) + movie.ImgFileName;
-                    string ToPath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["MovieImageDirectory"]);
+                    string FromPath = ConfigurationManager.AppSettings["UploadFileBasePath"] + movie.ImgPathFileName;
+                    string ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"];
                     //TO DO 放到App启动时初始化一次
                     if (!Directory.Exists(ToPath))
                     {
                         Directory.CreateDirectory(ToPath);
                     }
-                    ToPath = ToPath = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["MovieImageDirectory"]) + movie.ImgFileName;
+                    ToPath = ConfigurationManager.AppSettings["MovieImageDirectory"] + movie.ImgPathFileName;
                     System.IO.File.Copy(FromPath, ToPath);
 
                     if (list.Count == 0)
                     {
                         //Insert or Update tbiz_picture
                         tbiz_pictureEntity pictureEntity = new tbiz_pictureEntity();
-                        pictureEntity.FileName = movie.ImgFileName; //电影主图文件
-                        pictureEntity.FileDirectory = HttpContext.Server.MapPath(ConfigurationManager.AppSettings["MovieImageDirectory"]).SubStringLastIndexByChar('\\', 3);
+                        pictureEntity.FileName = movie.ImgPathFileName;
+                        pictureEntity.FileDirectory = ConfigurationManager.AppSettings["MovieImageDirectory"].SubStringLastIndexByChar('\\', 3);
                         pictureEntity.ReferenceID = (int)movie.Id;
                         pictureEntity.DataType = (int)Enumerator.DataType.Movie;
                         pictureEntity.CreateTime = DateTime.Now;
@@ -214,7 +203,7 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                     {
                         tbiz_pictureEntity pictureEntity = list[0];
                         string oldImgFile = pictureEntity.FileName;
-                        pictureEntity.FileName = movie.ImgFileName;
+                        pictureEntity.FileName = movie.ImgPathFileName;
                         pictureBLL.Updatetbiz_pictureEntity(pictureEntity);
                         //TO DO 旧图片清理逻辑
                         tbiz_pictureEntity  oldPic = new tbiz_pictureEntity();
@@ -222,7 +211,7 @@ namespace ZJ.MVC5.Platform.Areas.Movie
                         oldPic.FileDirectory = pictureEntity.FileDirectory;
                         oldPic.DataType = (int)Enumerator.DataType.Movie;
                         oldPic.CreateTime = pictureEntity.CreateTime;
-                        pictureBLL.Addtbiz_pictureEntity(oldPic);
+                        pictureBLL.Addtbiz_pictureEntity(pictureEntity);
                     }
                 }
                 return JsonConvert.SerializeObject(new { result = true, message = "" });
